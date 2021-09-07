@@ -1,0 +1,55 @@
+
+# Display a nmuber of hits of 10 items
+# Note, total hits is only a sample information "gte"
+GET airline-2009/_search
+
+# now we ve exaclty hits total number
+GET airline-2009/_search
+{"track_total_hits": true }
+
+#Now I want to filter my "date" attribute called "FL_DATE"
+GET airline-2009/_search
+{ 
+  "query": {
+    "range": {
+      "FL_DATE": {
+        "gte":  "2009-02-01",
+        "lte":  "2009-02-28"
+      }
+    }
+  }
+}
+
+# Aggregations is simple! Now I am doing that using "aggs" operation (top 5 values) using the "OP_CARRIER" attribute
+GET airline-2009/_search
+{
+  "aggs" : {
+    "by_category": {
+      "terms": {
+        "field": "OP_CARRIER",
+        "size": 5
+      }
+    }
+  }
+}
+
+# Combine the last two queries
+GET airline-2009/_search
+{ 
+  "query": {
+    "range": {
+      "FL_DATE": {
+        "gte":  "2009-02-01",
+        "lte":  "2009-02-28"
+      }
+    }
+  },
+    "aggs" : {
+    "by_category": {
+      "terms": {
+        "field": "OP_CARRIER",
+        "size": 5
+      }
+    }
+  }
+}
