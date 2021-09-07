@@ -1,0 +1,52 @@
+GET news/_search
+
+# Group the news by category
+GET news/_search
+{ 
+  "aggs": {
+    "by_category": {
+      "terms": {
+        "field": "category",
+        "size": 100
+      }
+    }
+  }
+}
+
+
+GET news/_search
+{ "query": {"match": {"category": "ENTERTAINMENT"}}, 
+  "aggregations": {
+    "popular": {
+      "significant_text": { "field": "headline" }
+    }
+  }
+}
+
+
+#OR is default operator
+GET news/_search
+{ "query": {
+    "match": {
+      "headline": {
+      "query": "Khloe Kardashian",
+      "operator": "and"
+    }
+  }
+}
+}
+
+#It is more configurable, for example I can use a "minimum should be match" attribute
+
+
+#OR is default operator
+GET news/_search
+{ "query": {
+    "match": {
+      "headline": {
+      "query": "Khloe Kardashian",
+      "minimum_should_match": "1"
+    }
+  }
+}
+}
