@@ -50,3 +50,117 @@ GET news/_search
   }
 }
 }
+
+
+
+GET news/_search
+{
+  "query": {
+    "match": {
+      "short_description": "American husband"
+    }
+  }
+}
+
+GET news/_search
+{
+  "query": {
+    "match_phrase": {
+      "short_description": "She left her husband"
+    }
+  }
+}
+
+
+GET news/_search
+{
+  "query": {
+    "match_phrase_prefix": {
+      "short_description": "I love lo"
+    }
+  }
+}
+
+
+GET news/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "her husband",
+      "fields": ["short_description", "headline"],
+      "type": "phrase"
+    }
+  }
+}
+
+
+
+
+GET news/_search
+{
+  "query": {
+    "common": {
+        "short_description": {
+          "query": "the strong her husband",
+          "cutoff_frequency": 0.01
+        }
+    }
+  }
+}
+
+
+
+
+GET news/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {"match" : {"short_description": "husband" }},
+        {"match" : {"short_description": "strong" }}
+      ],
+      "should": [
+        {"match": {"short_description": "the" }},
+        {"match" : {"short_description": "her" }}
+      ],
+      "filter": [
+        {
+          "range": {
+            "date": {
+              "gte": "2012-08-01",
+              "lte": "2012-08-30"
+            }
+          }   
+        }
+      ]
+    }
+  }
+}
+
+
+
+
+GET news/_search
+{
+  "from": 10, 
+  "size": 20,
+  "query": {
+    "match": {
+      "short_description": "American husband"
+    }
+  }
+}
+
+
+GET news/_search
+{
+  "query": {
+    "query_string": {
+      "default_field": "short_description",
+      "query": "strong AND husband OR her"
+    }
+  }
+}
+
+
+
