@@ -1,0 +1,20 @@
+POST _sql?format=txt
+{
+  "query": "select * from news"
+}
+
+
+POST _sql?format=txt
+{
+  "query": "select category, count(*) as number_of_news from news group by category order by number_of_news desc"
+}
+
+
+POST _sql/translate
+{
+  "query": "select category, authors, headline from news where date > '2012-08-30'"
+}
+
+
+
+
