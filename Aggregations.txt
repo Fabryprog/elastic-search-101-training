@@ -1,0 +1,29 @@
+GET delay/_search
+
+GET delay/_search
+{ "track_total_hits": true }
+
+GET delay/_search
+{
+  "aggs": {
+    "MAX_DISTANCE": {
+      "max": {
+        "field": "DISTANCE"
+      }
+    }
+  }
+}
+
+
+GET delay/_search
+{
+  "aggs": {
+    "statistics": {
+      "matrix_stats": {
+        "fields": [ "DEP_DELAY", "ARR_DELAY" ]
+      }
+    }
+  }
+}
+
+
